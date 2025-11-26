@@ -11,7 +11,7 @@ export default function SplitHero() {
         <div className="max-w-md w-full space-y-6 sm:space-y-8">
           <div className="space-y-2 sm:space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-wide text-white leading-tight">
-              Uvhukhudo Malaka
+              Gordian Malaka
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-neutral-300 font-normal">
               Photographer | Videographer

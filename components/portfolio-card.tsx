@@ -17,7 +17,7 @@ export default function PortfolioCard({
   index,
 }: PortfolioCardProps) {
   return (
-    <Link href={href} className="group block w-full active:opacity-90">
+    <Link href={href} className="group block w-full">
       {/* break-inside-avoid: Keeps images whole inside columns
         transform-gpu: Fixes the scrolling flicker 
       */}
@@ -31,14 +31,14 @@ export default function PortfolioCard({
             fill
             /* quality=70 is the sweet spot for speed vs looks */
             quality={70}
-            className="object-cover transition-transform duration-500 group-hover:scale-105 group-active:scale-105"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-            /* Only load the first 6 immediately on mobile (2 columns x 3 rows) */
-            priority={index < 6}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            /* Only load the first 4 immediately */
+            priority={index < 4}
           />
 
           {/* Optional: Simple overlay to darken image slightly on hover (Pure CSS) */}
-          <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10 group-active:bg-black/10" />
+          <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
         </div>
       </article>
     </Link>

@@ -42,11 +42,10 @@ const portfolioItems = [
 
 export default function PortfolioGrid() {
   return (
-    <section className="w-full px-0">
-      <div className="w-full mb-12 sm:mb-16 md:mb-20 lg:mb-32">
-        {/* Mobile: 2 columns side by side, Tablet: 2 columns, Desktop: 3 columns 
-            gap-0 and space-y-0 ensure images touch perfectly */}
-        <div className="columns-2 md:columns-2 lg:columns-3 gap-0 space-y-0">
+    <section className="w-full">
+      <div className="w-full mb-20 md:mb-32">
+        {/* gap-0 and space-y-0 ensure images touch perfectly */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-0 space-y-0">
           {portfolioItems.map((item, index) => (
             <div key={index} className="break-inside-avoid">
               <PortfolioCard {...item} index={index} />
