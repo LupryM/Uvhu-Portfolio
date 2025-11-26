@@ -10,9 +10,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Uvhukhudo Malaka - Portfolio",
-  description:
-    "Professional film editor portfolio showcasing commercials, music videos, fashion films, and more.",
+  description: "Professional photographer portfolio",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.jpg",
+    shortcut: "/favicon.jpg",
+    apple: "/favicon.jpg",
+  },
 };
 
 export default function RootLayout({
