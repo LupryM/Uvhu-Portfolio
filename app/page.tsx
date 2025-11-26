@@ -1,9 +1,9 @@
-import SplitHero from "@/components/split-hero";
+import FullHero from "@/components/full-hero";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
-      <SplitHero />
+      <FullHero />
     </main>
   );
 }
