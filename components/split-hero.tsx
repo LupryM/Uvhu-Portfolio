@@ -70,7 +70,7 @@ export default function SplitHero() {
       {/* Right side - Image */}
       <div className="w-full lg:w-1/2 min-h-[40vh] sm:min-h-[50vh] lg:min-h-screen relative overflow-hidden">
         <img
-          src="e.webp"
+          src="o.webp"
           alt="Portrait"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />

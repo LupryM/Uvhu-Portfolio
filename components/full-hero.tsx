@@ -9,7 +9,7 @@ export default function FullHero() {
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src="/e.webp" // Using the same image as the split-hero for now
+          src="/f.webp" // Using the same image as the split-hero for now
           alt="Full-screen hero image"
           className="w-full h-full object-cover object-center"
         />
