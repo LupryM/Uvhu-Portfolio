@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import { Play } from 'lucide-react'
-import { useState } from 'react'
+import { Play } from "lucide-react";
+import { useState } from "react";
 
 export default function Hero() {
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 mb-12 md:mb-16">
+    <section className="w-full max-w-7xl mx-auto px-3 sm:px-4 mb-8 sm:mb-12 md:mb-16">
       <div className="relative aspect-video w-full overflow-hidden rounded-sm bg-muted group">
         {/* Placeholder for hero video/image */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900">
@@ -22,15 +22,18 @@ export default function Hero() {
         {!isPlaying && (
           <button
             onClick={() => setIsPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center bg-black/20 transition-all duration-300 hover:bg-black/30"
+            className="absolute inset-0 flex items-center justify-center bg-black/20 transition-all duration-300 hover:bg-black/30 active:bg-black/40"
             aria-label="Play video"
           >
-            <div className="flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-white/90 rounded-sm transition-transform duration-300 hover:scale-110 group-hover:bg-white">
-              <Play className="w-6 h-6 md:w-8 md:h-8 text-foreground ml-1" fill="currentColor" />
+            <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white/90 rounded-sm transition-transform duration-300 hover:scale-110 active:scale-95 group-hover:bg-white">
+              <Play
+                className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-foreground ml-0.5 sm:ml-1"
+                fill="currentColor"
+              />
             </div>
           </button>
         )}
       </div>
     </section>
-  )
+  );
 }

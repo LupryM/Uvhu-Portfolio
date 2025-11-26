@@ -13,14 +13,14 @@ export default function Navigation() {
   const [activeLink, setActiveLink] = useState("");
 
   return (
-    <nav className="w-full border-b border-border py-4 mb-12">
-      <ul className="flex flex-wrap items-center justify-center gap-3 md:gap-6 px-4">
+    <nav className="w-full border-b border-border py-3 sm:py-4 mb-8 sm:mb-12">
+      <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-4">
         {navLinks.map((link, index) => (
           <li key={link.href} className="flex items-center">
             <Link
               href={link.href}
               onClick={() => setActiveLink(link.href)}
-              className={`text-sm md:text-base transition-colors hover:text-foreground ${
+              className={`text-xs sm:text-sm md:text-base transition-colors hover:text-foreground active:opacity-70 ${
                 activeLink === link.href
                   ? "text-foreground font-medium"
                   : "text-muted-foreground"
@@ -29,7 +29,7 @@ export default function Navigation() {
               {link.label}
             </Link>
             {index < navLinks.length - 1 && (
-              <span className="ml-3 md:ml-6 text-muted-foreground">/</span>
+              <span className="ml-2 sm:ml-3 md:ml-6 text-muted-foreground text-xs sm:text-sm">/</span>
             )}
           </li>
         ))}
