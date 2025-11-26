@@ -1,0 +1,47 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: 'Inter', 'system-ui', '-apple-system', 'sans-serif';
+  
+  /* Using pure black background for maximum contrast with white text */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  
+  --color-card: #1a1a1a;
+  --color-card-foreground: #ffffff;
+  
+  --color-primary: #ffffff;
+  --color-primary-foreground: #000000;
+  
+  --color-secondary: #262626;
+  --color-secondary-foreground: #ffffff;
+  
+  --color-muted: #2a2a2a;
+  --color-muted-foreground: #d4d4d8;
+  
+  --color-accent: #ffffff;
+  --color-accent-foreground: #000000;
+  
+  --color-border: #3a3a3a;
+  --color-input: #27272a;
+  --color-ring: #ffffff;
+  
+  --radius: 0.25rem;
+}
+
+* {
+  border-color: theme('colors.border');
+}
+
+body {
+  font-family: var(--font-sans);
+  background: theme('colors.background');
+  color: theme('colors.foreground');
+  font-feature-settings: 'rlig' 1, 'calt' 1;
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: 'Inter var', var(--font-sans);
+  }
+}
