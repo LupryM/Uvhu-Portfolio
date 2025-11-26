@@ -10,7 +10,7 @@ export default function ExplorePage() {
             Uvhukhudo Malaka
           </h1>
           <p className="text-base md:text-lg text-muted-foreground font-light text-center mb-8">
-            Photographer
+            Photographer | Videographer
           </p>
         </div>
       </div>

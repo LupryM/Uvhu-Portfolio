@@ -131,7 +131,8 @@ export default function ContactPage() {
                 </h3>
                 <div className="flex gap-3">
                   <a
-                    href="https://twitter.com"
+                    href="https://x.com/Goodwillprod?t=0IgadAqi7yMFDtvq6DfA0g&s=09
+ add the twitter"
                     target="_blank"
                     className="w-10 h-10 rounded-full bg-muted flex items-center justify-center transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
                   >

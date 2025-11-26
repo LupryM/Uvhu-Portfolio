@@ -37,7 +37,8 @@ export default function SplitHero() {
           {/* Social Media Icons */}
           <div className="flex gap-3 sm:gap-4 pt-2 sm:pt-4">
             <a
-              href="https://twitter.com"
+              href="https://x.com/Goodwillprod?t=0IgadAqi7yMFDtvq6DfA0g&s=09
+ add the twitter"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-muted flex items-center justify-center transition-all duration-300 hover:bg-foreground hover:text-background active:scale-90"
@@ -46,24 +47,6 @@ export default function SplitHero() {
               <Twitter className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
 
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-muted flex items-center justify-center transition-all duration-300 hover:bg-foreground hover:text-background active:scale-90"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-muted flex items-center justify-center transition-all duration-300 hover:bg-foreground hover:text-background active:scale-90"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
             <a
               href="https://www.instagram.com/goodwillprod/"
               target="_blank"

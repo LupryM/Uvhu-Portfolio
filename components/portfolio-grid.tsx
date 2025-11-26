@@ -27,7 +27,7 @@ const portfolioItems = [
   { image: "/ee.webp", href: "#19", aspectRatio: "aspect-[3/4]" },
   { image: "q.webp", href: "#20", aspectRatio: "aspect-[16/9]" },
   { image: "/u.webp", href: "#21", aspectRatio: "aspect-[3/4]" },
-  
+
   { image: "/a.webp", href: "#22", aspectRatio: "aspect-[3/4]" },
   { image: "/x.webp", href: "#23", aspectRatio: "aspect-[3/4]" },
   { image: "/gg.webp", href: "#24", aspectRatio: "aspect-[4/3]" },
@@ -44,8 +44,7 @@ export default function PortfolioGrid() {
   return (
     <section className="w-full">
       <div className="w-full mb-20 md:mb-32">
-        {/* gap-0 and space-y-0 ensure images touch perfectly */}
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-0 space-y-0">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
           {portfolioItems.map((item, index) => (
             <div key={index} className="break-inside-avoid">
               <PortfolioCard {...item} index={index} />

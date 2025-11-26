@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const navLinks = [
   { label: "Photography", href: "/explore#photography" },
+  { label: "Videography", href: "/explore#videography" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -29,7 +30,9 @@ export default function Navigation() {
               {link.label}
             </Link>
             {index < navLinks.length - 1 && (
-              <span className="ml-2 sm:ml-3 md:ml-6 text-muted-foreground text-xs sm:text-sm">/</span>
+              <span className="ml-2 sm:ml-3 md:ml-6 text-muted-foreground text-xs sm:text-sm">
+                /
+              </span>
             )}
           </li>
         ))}
