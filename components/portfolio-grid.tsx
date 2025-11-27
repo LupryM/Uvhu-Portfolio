@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Masonry from "react-masonry-css";
 import PortfolioCard from "@/components/portfolio-card";
 import CategoryFilter, { type Category } from "@/components/category-filter";
 
@@ -12,7 +13,6 @@ interface PortfolioItem {
 }
 
 const portfolioItems: PortfolioItem[] = [
-  // ... (Your items data) ...
   {
     image: "/f.jpg",
     href: "#1",
@@ -25,7 +25,6 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-[16/9]",
     category: "people",
   },
-
   {
     image: "/k.webp",
     href: "#8",
@@ -44,14 +43,12 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-[3/4]",
     category: "people",
   },
-
   {
     image: "/s.webp",
     href: "#15",
     aspectRatio: "aspect-[3/4]",
     category: "people",
   },
-
   {
     image: "/ll.webp",
     href: "#15",
@@ -202,7 +199,6 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-square",
     category: "events",
   },
-
   {
     image: "/y.webp",
     href: "#25",
@@ -211,7 +207,7 @@ const portfolioItems: PortfolioItem[] = [
   },
 ];
 
-// 🔥 CONFIG 1: MOBILE MASTER ORDER (< 768px)
+// 🔥 MASTER ORDER (used on both mobile + desktop)
 const mobileOrder = [
   "/f.jpg",
   "/c.webp",
@@ -246,58 +242,32 @@ const mobileOrder = [
   "/p.webp",
 ];
 
-// 🔥 CONFIG 2: DESKTOP MASTER ORDER (>= 768px)
-// Rearrange this list however you want the desktop view to look
-const desktopOrder = [
-  "/z.webp", // Maybe you want square images first on desktop?
-  "/aa.webp", // Or wide images?
-  "/c.webp",
-  "/f.jpg",
-  "/l.webp",
-  "/u.webp",
-  "/k.webp",
-  "/x.webp",
-  // ... add the rest of your images here in your desired Desktop order
-];
+// Masonry columns
+const breakpointColumns = {
+  default: 3, 
+  1024: 3,
+  768: 2,
+  0: 1,
+};
 
 export default function PortfolioGrid() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // 1. Filter first
+  // 1. Filter by category
   const filteredItems =
     selectedCategory === "all"
       ? portfolioItems
       : portfolioItems.filter((item) => item.category === selectedCategory);
 
-  // 2. Sort based on device (Mobile List vs Desktop List)
+  // 2. Sort based on mobileOrder only (applies to all screens)
   const sortedItems = [...filteredItems].sort((a, b) => {
-    // 🔥 Select the correct Master List based on screen size
-    const currentMasterList = isMobile ? mobileOrder : desktopOrder;
+    const aIndex = mobileOrder.indexOf(a.image);
+    const bIndex = mobileOrder.indexOf(b.image);
 
-    const aIndex = currentMasterList.indexOf(a.image);
-    const bIndex = currentMasterList.indexOf(b.image);
-
-    // Sort Logic:
-    // 1. If both images are in the list, use the list order
     if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-
-    // 2. If only A is in the list, A goes to top
     if (aIndex !== -1) return -1;
-
-    // 3. If only B is in the list, B goes to top
     if (bIndex !== -1) return 1;
 
-    // 4. If neither are in the list, keep original file order
     return 0;
   });
 
@@ -306,13 +276,15 @@ export default function PortfolioGrid() {
       <CategoryFilter onCategoryChange={setSelectedCategory} />
 
       <div className="w-full mb-20 md:mb-32 px-4">
-        <div className="columns-1 md:columns-2 xl:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
+        <Masonry
+          breakpointCols={breakpointColumns}
+          className="flex gap-4"
+          columnClassName="flex flex-col gap-4"
+        >
           {sortedItems.map((item, index) => (
-            <div key={`${item.image}-${index}`} className="break-inside-avoid">
-              <PortfolioCard {...item} index={index} />
-            </div>
+            <PortfolioCard key={`${item.image}-${index}`} {...item} index={index} />
           ))}
-        </div>
+        </Masonry>
       </div>
     </section>
   );
