@@ -15,7 +15,7 @@ export default function Navigation() {
 
   return (
     <nav className="w-full border-b border-border py-3 sm:py-4 mb-8 sm:mb-12">
-      <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-4">
+      <ul className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-6 px-3 sm:px-4 text-lg font-semibold">
         {navLinks.map((link, index) => (
           <li key={link.href} className="flex items-center">
             <Link
