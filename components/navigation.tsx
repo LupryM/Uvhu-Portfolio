@@ -31,7 +31,7 @@ export default function Navigation() {
             </Link>
             {index < navLinks.length - 1 && (
               <span className="ml-2 sm:ml-3 md:ml-6 text-muted-foreground text-xs sm:text-sm">
-                /
+                |
               </span>
             )}
           </li>

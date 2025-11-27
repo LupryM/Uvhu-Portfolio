@@ -13,7 +13,7 @@ export default function AboutPage() {
               About Me
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground font-light">
-              Jessin Sam S
+              Gordian Malaka
             </p>
             <p className="text-base md:text-lg text-muted-foreground font-light">
               Photographer | Videographer

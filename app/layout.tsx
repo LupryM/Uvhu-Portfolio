@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   description: "Professional photographer portfolio",
   generator: "v0.app",
   icons: {
-    icon: "/favicon.jpg",
-    shortcut: "/favicon.jpg",
-    apple: "/favicon.jpg",
+    icon: "/favicon2.png",
+    shortcut: "/favicon2.png",
+    apple: "/favicon2.png",
   },
 };
 

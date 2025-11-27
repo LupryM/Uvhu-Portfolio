@@ -13,7 +13,7 @@ interface PortfolioItem {
 
 const portfolioItems: PortfolioItem[] = [
   // ... (Your items data) ...
-    {
+  {
     image: "/f.jpg",
     href: "#1",
     aspectRatio: "aspect-[3/4]",
@@ -39,18 +39,6 @@ const portfolioItems: PortfolioItem[] = [
     category: "people",
   },
   {
-    image: "/s.webp",
-    href: "#15",
-    aspectRatio: "aspect-[3/4]",
-    category: "people",
-  },
-  {
-    image: "/s.webp",
-    href: "#15",
-    aspectRatio: "aspect-[3/4]",
-    category: "people",
-  },
-  {
     image: "/jj.webp",
     href: "#15",
     aspectRatio: "aspect-[3/4]",
@@ -58,11 +46,12 @@ const portfolioItems: PortfolioItem[] = [
   },
 
   {
-    image: "/kk.webp",
+    image: "/s.webp",
     href: "#15",
     aspectRatio: "aspect-[3/4]",
     category: "people",
   },
+
   {
     image: "/ll.webp",
     href: "#15",
@@ -213,17 +202,12 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-square",
     category: "events",
   },
+
   {
     image: "/y.webp",
     href: "#25",
     aspectRatio: "aspect-square",
     category: "events",
-  },
-  {
-    image: "/l.webp",
-    href: "#31",
-    aspectRatio: "aspect-[16/9]",
-    category: "sports",
   },
 ];
 
@@ -235,22 +219,27 @@ const mobileOrder = [
   "/x.webp",
   "/e.webp",
   "/a.webp",
+  "/jj.webp",
   "/s.webp",
   "/g.webp",
   "/r.webp",
   "/t.webp",
-  "/jj.webp",
+  "/ll.webp",
   "/b.webp",
   "/gg.webp",
   "/ff.webp",
-  "/cc.webp",
+  "/bb.webp",
+
   "/y.webp",
   "/z.webp",
-  "/j.webp",
+  "/cc.webp",
+
   "/o.webp",
+  "/f.webp",
   "/aa.webp",
-  "/mm.webp",
+
   "/dd.webp",
+  "/j.webp",
   "/ee.webp",
   "/v.webp",
   "/l.webp",
