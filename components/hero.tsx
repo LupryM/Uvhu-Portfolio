@@ -9,14 +9,19 @@ export default function Hero() {
   return (
     <section className="w-full max-w-7xl mx-auto px-3 sm:px-4 mb-8 sm:mb-12 md:mb-16">
       <div className="relative aspect-video w-full overflow-hidden rounded-sm bg-muted group">
-        {/* Placeholder for hero video/image */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900">
-          <img
-            src="/urban-street-basketball-scene-cinematic.jpg"
-            alt="Featured film work"
-            className="w-full h-full object-cover opacity-90"
-          />
-        </div>
+        {/* Desktop Image */}
+        <img
+          src="/urban-street-basketball-scene-cinematic.jpg"
+          alt="Featured film work"
+          className="hidden sm:block w-full h-full object-cover opacity-90"
+        />
+
+        {/* Mobile Image */}
+        <img
+          src="/mobile-hero-image.jpg" // <-- replace with your mobile file
+          alt="Featured film work mobile"
+          className="block sm:hidden w-full h-full object-cover opacity-90"
+        />
 
         {/* Play button overlay */}
         {!isPlaying && (

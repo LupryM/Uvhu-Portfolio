@@ -1,19 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { Twitter, Linkedin, Facebook, Instagram, Mail } from "lucide-react";
+import { Twitter, Instagram, Mail } from "lucide-react";
 
 export default function FullHero() {
   return (
     <section className="min-h-screen relative flex items-center justify-center">
-      {/* Background Image */}
+      {/* Background Images */}
       <div className="absolute inset-0 w-full h-full">
+        {/* Desktop Image */}
         <img
-          src="/f.webp" // Using the same image as the split-hero for now
+          src="/f.webp"
           alt="Full-screen hero image"
-          className="w-full h-full object-cover object-center"
+          className="hidden sm:block w-full h-full object-cover object-center"
         />
-        {/* Overlay for better text readability */}
+
+        {/* Mobile Image */}
+        <img
+          src="/fm.jpg" // <-- replace with your mobile version
+          alt="Full-screen hero image mobile"
+          className="block sm:hidden w-full h-full object-cover object-center"
+        />
+
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black/50 backdrop-brightness-75"></div>
       </div>
 
@@ -65,8 +74,11 @@ export default function FullHero() {
           >
             <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
           </a>
+
           <a
-            href="mailto:contact@example.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=shigotoinx@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 text-white flex items-center justify-center transition-all duration-300 hover:bg-white hover:text-black active:scale-90 backdrop-blur-sm"
             aria-label="Email"
           >

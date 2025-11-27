@@ -96,7 +96,7 @@ export default function ContactPage() {
                         href="mailto:malakauvhukhudo@gmail.com"
                         className="text-foreground hover:text-accent transition-colors"
                       >
-                        malakauvhukhudo@gmail.com
+                        shigotoinx@gmail.com
                       </a>
                     </div>
                   </div>
@@ -138,13 +138,7 @@ export default function ContactPage() {
                   >
                     <Twitter className="w-4 h-4" />
                   </a>
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
+
                   <a
                     href="https://www.instagram.com/goodwillprod/"
                     target="_blank"

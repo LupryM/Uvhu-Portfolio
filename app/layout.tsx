@@ -1,3 +1,4 @@
+import type React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -26,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

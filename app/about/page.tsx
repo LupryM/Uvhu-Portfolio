@@ -23,26 +23,22 @@ export default function AboutPage() {
           <div className="prose prose-lg max-w-none">
             <div className="space-y-6 text-foreground/80 leading-relaxed">
               <p>
-                I'm a passionate film student and visual storyteller dedicated
-                to capturing compelling moments through photography and
-                cinematography. My work focuses on creating authentic, cinematic
-                narratives that resonate with audiences.
+                I'm Gordian Malaka, a film student who has a passion for
+                photography. I have a keen eye for composition, creative
+                authenticity and narrative storytelling.
               </p>
 
               <p>
-                With a keen eye for composition and lighting, I specialize in
-                portrait photography, street photography, and documentary-style
-                filmmaking. My approach combines technical precision with
-                creative vision to produce work that is both visually striking
-                and emotionally engaging.
+                My work spans from portraits, events to sports ,with added
+                documentary filmmaking. I aim to create an authenticity and
+                original experience with each shoot wheather that be a personal
+                project or a hired shoot.
               </p>
 
               <p>
-                Currently pursuing my education in film and visual arts, I'm
-                constantly exploring new techniques and pushing the boundaries
-                of visual storytelling. From intimate portraits to dynamic film
-                projects, each piece in my portfolio represents my commitment to
-                the craft.
+                I'm open to any creative vision that one might propose and do my
+                best to bring it to life using my knowledge on filmmaking,
+                contemporary story telling and blocking.
               </p>
 
               <div className="pt-6">
