@@ -246,8 +246,8 @@ const mobileOrder = [
 const breakpointColumns = {
   default: 3,
   1024: 3,
-  768: 2,
-  0: 1,
+  768: 2, // Tablets remain 2 columns
+  640: 1, // <--- CHANGED: Forces 1 column on screens smaller than 640px (Mobile)
 };
 
 export default function PortfolioGrid() {
