@@ -23,7 +23,7 @@ const portfolioItems: PortfolioItem[] = [
     image: "/c.webp",
     href: "#12",
     aspectRatio: "aspect-[16/9]",
-    category: "people",
+    category: "sports",
   },
   {
     image: "/k.webp",
@@ -83,7 +83,7 @@ const portfolioItems: PortfolioItem[] = [
     image: "/x.webp",
     href: "#23",
     aspectRatio: "aspect-[3/4]",
-    category: "people",
+    category: "sports",
   },
   {
     image: "/r.webp",
@@ -161,7 +161,7 @@ const portfolioItems: PortfolioItem[] = [
     image: "/e.webp",
     href: "#4",
     aspectRatio: "aspect-[3/4]",
-    category: "people",
+    category: "sports",
   },
   {
     image: "/t.webp",
@@ -185,7 +185,7 @@ const portfolioItems: PortfolioItem[] = [
     image: "/d.webp",
     href: "#14",
     aspectRatio: "aspect-square",
-    category: "people",
+    category: "sports",
   },
   {
     image: "/cc.webp",
@@ -244,7 +244,7 @@ const mobileOrder = [
 
 // Masonry columns
 const breakpointColumns = {
-  default: 3, 
+  default: 3,
   1024: 3,
   768: 2,
   0: 1,
@@ -282,7 +282,11 @@ export default function PortfolioGrid() {
           columnClassName="flex flex-col gap-4"
         >
           {sortedItems.map((item, index) => (
-            <PortfolioCard key={`${item.image}-${index}`} {...item} index={index} />
+            <PortfolioCard
+              key={`${item.image}-${index}`}
+              {...item}
+              index={index}
+            />
           ))}
         </Masonry>
       </div>
