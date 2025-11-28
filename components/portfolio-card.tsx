@@ -69,7 +69,7 @@ export default function PortfolioCard({
             src={image}
             alt=""
             fill
-            quality={70}
+            quality={60}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={index < 2} // keep priority small (adjust if needed)
