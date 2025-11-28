@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { label: "Photography", href: "/explore#photography" },
@@ -15,24 +15,59 @@ export default function Navigation() {
   const [activeLink, setActiveLink] = useState("");
   const lockRef = useRef(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
-    // Prevent rapid repeated taps from queuing many navigations
+    // Block rapid repeated taps
     if (lockRef.current) {
       e.preventDefault();
       return;
     }
     lockRef.current = true;
-    setTimeout(() => (lockRef.current = false), 500);
+    setTimeout(() => (lockRef.current = false), 600);
 
-    // Keep highlighting immediate for UX
+    // Highlight immediately
     setActiveLink(href);
 
-    // Let Link/navigation handle the route normally for cross-page links.
-    // For same-page hash navigation, the target page will handle the hash.
+    // Normalize and split href into path + fragment
+    const [pathPart, fragment] = href.split("#");
+    const linkPath = pathPart || "/"; // ensure we have a path
+    const currentPath = pathname || "/";
+
+    // If this is a same-page hash link, handle client-side to avoid a full navigation
+    if (fragment && linkPath === currentPath) {
+      e.preventDefault();
+
+      // Only update the hash if it's different (minimize history churn)
+      const newHash = `#${fragment}`;
+      if (window.location.hash !== newHash) {
+        try {
+          history.replaceState(null, "", `${linkPath}${newHash}`);
+        } catch {
+          // ignore replaceState issues
+        }
+      }
+
+      // Try to scroll to the fragment target if it exists
+      const el =
+        document.getElementById(fragment) ||
+        document.querySelector(`[name="${fragment}"]`);
+      if (el) {
+        try {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } catch {
+          // ignore scroll errors
+        }
+      }
+      return;
+    }
+
+    // Cross-page navigation: use router.push to navigate client-side
+    e.preventDefault();
+    router.push(href);
   };
 
   return (
