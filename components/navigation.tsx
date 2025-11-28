@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { label: "Photography", href: "/explore#photography" },
@@ -12,6 +13,27 @@ const navLinks = [
 
 export default function Navigation() {
   const [activeLink, setActiveLink] = useState("");
+  const lockRef = useRef(false);
+  const pathname = usePathname();
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    // Prevent rapid repeated taps from queuing many navigations
+    if (lockRef.current) {
+      e.preventDefault();
+      return;
+    }
+    lockRef.current = true;
+    setTimeout(() => (lockRef.current = false), 500);
+
+    // Keep highlighting immediate for UX
+    setActiveLink(href);
+
+    // Let Link/navigation handle the route normally for cross-page links.
+    // For same-page hash navigation, the target page will handle the hash.
+  };
 
   return (
     <nav className="w-full border-b border-border py-3 sm:py-4 mb-8 sm:mb-12">
@@ -20,7 +42,7 @@ export default function Navigation() {
           <li key={link.href} className="flex items-center">
             <Link
               href={link.href}
-              onClick={() => setActiveLink(link.href)}
+              onClick={(e) => handleClick(e as any, link.href)}
               className={`text-xs sm:text-sm md:text-base transition-colors hover:text-foreground active:opacity-70 ${
                 activeLink === link.href
                   ? "text-foreground font-medium"
