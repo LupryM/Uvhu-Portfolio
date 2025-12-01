@@ -166,7 +166,7 @@ const portfolioItems: PortfolioItem[] = [
   {
     image: "/oo.webp",
     aspectRatio: "aspect-square",
-    category: "people",
+    category: "sports",
   },
   {
     image: "/pp.webp",
@@ -197,7 +197,6 @@ const mobileOrder = [
   "/z.webp",
   "/pp.webp",
   "/cc.webp",
-  "/oo.webp",
   "/o.webp",
   "/f.webp",
   "/aa.webp",
@@ -206,6 +205,7 @@ const mobileOrder = [
   "/ee.webp",
   "/v.webp",
   "/l.webp",
+  "/oo.webp",
   "/p.webp",
 ];
 
