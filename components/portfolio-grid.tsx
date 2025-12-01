@@ -164,9 +164,14 @@ const portfolioItems: PortfolioItem[] = [
     category: "events",
   },
   {
-    image: "/y.webp",
+    image: "/oo.webp",
     aspectRatio: "aspect-square",
-    category: "events",
+    category: "people",
+  },
+  {
+    image: "/pp.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "people",
   },
 ];
 
@@ -190,7 +195,9 @@ const mobileOrder = [
   "/bb.webp",
   "/y.webp",
   "/z.webp",
+  "/pp.webp",
   "/cc.webp",
+  "/oo.webp",
   "/o.webp",
   "/f.webp",
   "/aa.webp",
