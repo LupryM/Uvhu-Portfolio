@@ -5,6 +5,11 @@ import Masonry from "react-masonry-css";
 import PortfolioCard from "@/components/portfolio-card";
 import CategoryFilter, { type Category } from "@/components/category-filter";
 
+// 1. Imports for the Lightbox
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
+
 interface PortfolioItem {
   image: string;
   // href removed
@@ -218,6 +223,8 @@ const breakpointColumns = {
 
 export default function PortfolioGrid() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
+  // 2. State for Lightbox
+  const [index, setIndex] = useState(-1);
 
   const filteredItems =
     selectedCategory === "all"
@@ -234,6 +241,9 @@ export default function PortfolioGrid() {
     return 0;
   });
 
+  // 3. Create slides array matching the CURRENT filtered/sorted view
+  const slides = sortedItems.map((item) => ({ src: item.image }));
+
   return (
     <section className="w-full">
       <CategoryFilter onCategoryChange={setSelectedCategory} />
@@ -244,15 +254,32 @@ export default function PortfolioGrid() {
           className="flex gap-1.5"
           columnClassName="flex flex-col gap-1.5"
         >
-          {sortedItems.map((item, index) => (
-            <PortfolioCard
-              key={`${item.image}-${index}`}
-              {...item}
-              index={index}
-            />
+          {sortedItems.map((item, i) => (
+            <div
+              key={`${item.image}-${i}`}
+              // 4. Trigger Lightbox on click
+              onClick={() => setIndex(i)}
+              className="cursor-pointer"
+            >
+              <PortfolioCard {...item} index={i} />
+            </div>
           ))}
         </Masonry>
       </div>
+
+      {/* 5. Lightbox Component */}
+      <Lightbox
+        index={index}
+        open={index >= 0}
+        close={() => setIndex(-1)}
+        slides={slides}
+        plugins={[Zoom]}
+        animation={{ zoom: 500 }}
+        zoom={{
+          maxZoomPixelRatio: 3,
+          scrollToZoom: true,
+        }}
+      />
     </section>
   );
 }
