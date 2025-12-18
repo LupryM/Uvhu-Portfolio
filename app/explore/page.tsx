@@ -10,10 +10,7 @@ export default function ExplorePage() {
             GOODWILL PRODUCTIONS
           </h1>
 
-          <p className="mt-3 text-sm md:text-base tracking-widest text-gray-400 uppercase">
-            Photography | Videography
-          </p>
-
+        
           <p className="mt-3 text-xs md:text-sm tracking-widest text-gray-500 uppercase">
             by
           </p>
