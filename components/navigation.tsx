@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import Link from "next/link"
 import { useState, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
@@ -20,7 +19,6 @@ export default function Navigation() {
   const router = useRouter()
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Block rapid repeated taps
     if (lockRef.current) {
       e.preventDefault()
       return
@@ -28,67 +26,57 @@ export default function Navigation() {
     lockRef.current = true
     setTimeout(() => (lockRef.current = false), 600)
 
-    // Highlight immediately
     setActiveLink(href)
 
-    // Normalize and split href into path + fragment
     const [pathPart, fragment] = href.split("#")
-    const linkPath = pathPart || "/" // ensure we have a path
+    const linkPath = pathPart || "/"
     const currentPath = pathname || "/"
 
-    // If this is a same-page hash link, handle client-side to avoid a full navigation
     if (fragment && linkPath === currentPath) {
       e.preventDefault()
-
-      // Only update the hash if it's different (minimize history churn)
       const newHash = `#${fragment}`
       if (window.location.hash !== newHash) {
         try {
           history.replaceState(null, "", `${linkPath}${newHash}`)
-        } catch {
-          // ignore replaceState issues
-        }
+        } catch {}
       }
 
-      // Try to scroll to the fragment target if it exists
       const el = document.getElementById(fragment) || document.querySelector(`[name="${fragment}"]`)
       if (el) {
         try {
           el.scrollIntoView({ behavior: "smooth", block: "start" })
-        } catch {
-          // ignore scroll errors
-        }
+        } catch {}
       }
       return
     }
 
-    // Cross-page navigation: use router.push to navigate client-side
     e.preventDefault()
     router.push(href)
   }
 
   return (
-    <nav className="w-full border-b border-border/30 py-4 mb-8 md:mb-12">
-      <ul className="flex flex-wrap items-center justify-center gap-1 px-4">
+    /* EXACT CSS FROM YOUR PROVIDED SAMPLE */
+    <nav className="w-full border-t border-border/20 px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <ul className="flex items-center justify-center gap-0 sm:gap-2 overflow-x-auto sm:overflow-visible no-scrollbar">
         {navLinks.map((link, index) => (
-          <li key={link.href} className="flex items-center">
+          <li key={link.href} className="flex items-center flex-shrink-0">
             <Link
               href={link.href}
               onClick={(e) => handleClick(e as any, link.href)}
               className={`
-                px-4 py-3 min-h-[44px] flex items-center
-                text-sm md:text-base font-light tracking-wide
-                transition-all duration-300
-                hover:text-foreground hover:tracking-wider
-                active:opacity-70
-                relative group
-                ${activeLink === link.href ? "text-foreground" : "text-muted-foreground/90"}
+                text-xs sm:text-sm font-medium tracking-wide 
+                px-3 sm:px-4 py-2 sm:py-3 
+                transition-colors duration-200 whitespace-nowrap relative group
+                ${activeLink === link.href ? "text-foreground" : "text-muted-foreground hover:text-foreground"}
               `}
             >
               {link.label}
-              <span className="absolute bottom-2 left-4 right-4 h-px bg-foreground transition-all duration-300 scale-x-0 group-hover:scale-x-100 origin-left"></span>
+              <span className="absolute bottom-1 left-3 sm:left-4 right-3 sm:right-4 h-px bg-foreground scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
-            {index < navLinks.length - 1 && <span className="mx-1 md:mx-2 text-border/50 text-xs">|</span>}
+            
+            {index < navLinks.length - 1 && (
+              <span className="text-border/40 select-none hidden sm:inline text-xs">|</span>
+            )}
           </li>
         ))}
       </ul>
