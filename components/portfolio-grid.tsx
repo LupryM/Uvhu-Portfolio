@@ -1,20 +1,18 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import Masonry from "react-masonry-css";
-import PortfolioCard from "@/components/portfolio-card";
-import CategoryFilter, { type Category } from "@/components/category-filter";
+import { useState, useMemo, useCallback } from "react"
+import Masonry from "react-masonry-css"
+import PortfolioCard from "@/components/portfolio-card"
+import CategoryFilter, { type Category } from "@/components/category-filter"
 
-// 1. Imports for the Lightbox
-import Lightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/styles.css";
+import { Lightbox } from "yet-another-react-lightbox"
+import Zoom from "yet-another-react-lightbox/plugins/zoom"
+import "yet-another-react-lightbox/styles.css"
 
 interface PortfolioItem {
-  image: string;
-  // href removed
-  aspectRatio: string;
-  category: Category;
+  image: string
+  aspectRatio: string
+  category: Category
 }
 
 const portfolioItems: PortfolioItem[] = [
@@ -178,9 +176,8 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-[3/4]",
     category: "people",
   },
-];
+]
 
-// 🔥 MASTER ORDER
 const mobileOrder = [
   "/f.jpg",
   "/c.webp",
@@ -212,62 +209,62 @@ const mobileOrder = [
   "/l.webp",
   "/oo.webp",
   "/p.webp",
-];
+]
 
 const breakpointColumns = {
   default: 3,
   1024: 3,
   768: 2,
   0: 1,
-};
+}
 
 export default function PortfolioGrid() {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("all");
-  // 2. State for Lightbox
-  const [index, setIndex] = useState(-1);
+  const [selectedCategory, setSelectedCategory] = useState<Category>("all")
+  const [index, setIndex] = useState(-1)
 
-  const filteredItems =
-    selectedCategory === "all"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === selectedCategory);
+  const sortedItems = useMemo(() => {
+    const filtered =
+      selectedCategory === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === selectedCategory)
 
-  const sortedItems = [...filteredItems].sort((a, b) => {
-    const aIndex = mobileOrder.indexOf(a.image);
-    const bIndex = mobileOrder.indexOf(b.image);
+    return [...filtered].sort((a, b) => {
+      const aIndex = mobileOrder.indexOf(a.image)
+      const bIndex = mobileOrder.indexOf(b.image)
 
-    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-    if (aIndex !== -1) return -1;
-    if (bIndex !== -1) return 1;
-    return 0;
-  });
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex
+      if (aIndex !== -1) return -1
+      if (bIndex !== -1) return 1
+      return 0
+    })
+  }, [selectedCategory])
 
-  // 3. Create slides array matching the CURRENT filtered/sorted view
-  const slides = sortedItems.map((item) => ({ src: item.image }));
+  const slides = useMemo(() => sortedItems.map((item) => ({ src: item.image })), [sortedItems])
+
+  const handleCardClick = useCallback((i: number) => {
+    setIndex(i)
+  }, [])
+
+  const handleCategoryChange = useCallback((category: Category) => {
+    setSelectedCategory(category)
+  }, [])
 
   return (
     <section className="w-full">
-      <CategoryFilter onCategoryChange={setSelectedCategory} />
+      <CategoryFilter onCategoryChange={handleCategoryChange} />
 
       <div className="w-full mb-20 md:mb-32 px-1.5">
-        <Masonry
-          breakpointCols={breakpointColumns}
-          className="flex gap-1.5"
-          columnClassName="flex flex-col gap-1.5"
-        >
+        <Masonry breakpointCols={breakpointColumns} className="flex gap-1.5" columnClassName="flex flex-col gap-1.5">
           {sortedItems.map((item, i) => (
-            <div
+            <PortfolioCard
               key={`${item.image}-${i}`}
-              // 4. Trigger Lightbox on click
-              onClick={() => setIndex(i)}
-              className="cursor-pointer"
-            >
-              <PortfolioCard {...item} index={i} />
-            </div>
+              image={item.image}
+              aspectRatio={item.aspectRatio}
+              index={i}
+              onClick={() => handleCardClick(i)}
+            />
           ))}
         </Masonry>
       </div>
 
-      {/* 5. Lightbox Component */}
       <Lightbox
         index={index}
         open={index >= 0}
@@ -281,5 +278,5 @@ export default function PortfolioGrid() {
         }}
       />
     </section>
-  );
+  )
 }
