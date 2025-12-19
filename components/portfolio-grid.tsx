@@ -17,7 +17,7 @@ interface PortfolioItem {
   color?: string;
 }
 
-// --- Dynamic Blur Helper (Matches your photo tones) ---
+// --- Dynamic Blur Helper ---
 const getDynamicBlur = (color: string = "#1a1a1a") => {
   const toBase64 = (str: string) =>
     typeof window === "undefined"
@@ -27,7 +27,7 @@ const getDynamicBlur = (color: string = "#1a1a1a") => {
   return `data:image/svg+xml;base64,${toBase64(svg)}`;
 };
 
-// --- RESTORED: PortfolioCard ---
+// --- HEAVILY OPTIMIZED: PortfolioCard with aggressive unloading ---
 const PortfolioCard = memo(function PortfolioCard({
   image,
   aspectRatio,
@@ -36,27 +36,66 @@ const PortfolioCard = memo(function PortfolioCard({
   onClick,
 }: any) {
   const blurUrl = useMemo(() => getDynamicBlur(color), [color]);
+  const [loadState, setLoadState] = useState<"unloaded" | "loading" | "loaded">(
+    "unloaded"
+  );
+  const cardRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "400px", // Start loading before visible
+      threshold: 0,
+    };
+
+    observerRef.current = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setLoadState("loading");
+      } else if (
+        entry.boundingClientRect.top < -1000 ||
+        entry.boundingClientRect.top > window.innerHeight + 1000
+      ) {
+        // Aggressively unload images far from viewport
+        setLoadState("unloaded");
+      }
+    }, options);
+
+    if (cardRef.current) {
+      observerRef.current.observe(cardRef.current);
+    }
+
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, []);
 
   return (
     <article
-      className="group w-full break-inside-avoid transform-gpu cursor-pointer"
+      ref={cardRef}
+      className="group w-full break-inside-avoid transform-gpu cursor-pointer will-change-transform"
       onClick={onClick}
     >
       <div
         className={`relative w-full ${aspectRatio} overflow-hidden bg-muted`}
+        style={{ backgroundColor: color }}
       >
-        <Image
-          src={image || "/placeholder.svg"}
-          alt=""
-          fill
-          quality={60}
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority={index < 2}
-          decoding="async" // Offloads decoding from main thread
-          placeholder="blur"
-          blurDataURL={blurUrl}
-        />
+        {loadState !== "unloaded" ? (
+          <Image
+            src={image || "/placeholder.svg"}
+            alt=""
+            fill
+            quality={60}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={index < 3}
+            decoding="async"
+            placeholder="blur"
+            blurDataURL={blurUrl}
+            loading={index < 6 ? "eager" : "lazy"}
+            onLoad={() => setLoadState("loaded")}
+          />
+        ) : null}
         <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
       </div>
     </article>
@@ -297,16 +336,23 @@ const breakpointColumns = {
   default: 3,
   1024: 3,
   768: 2,
-  0: 1, // Restores single column on mobile
+  0: 1,
 };
+
+// Detect if mobile
+const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 
 export default function PortfolioGrid() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
   const [index, setIndex] = useState(-1);
-  const [displayLimit, setDisplayLimit] = useState(12); // Higher initial count for masonry flow
-  const observerTarget = useRef(null);
+  const [displayLimit, setDisplayLimit] = useState(() =>
+    isMobile() ? 12 : 18
+  );
+  const observerTarget = useRef<HTMLDivElement>(null);
+  const masonryRef = useRef<HTMLDivElement>(null);
+  const loadTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
-  // --- Filter and Sort (Restored your exact logic) ---
+  // --- Filter and Sort ---
   const sortedItems = useMemo(() => {
     const filtered =
       selectedCategory === "all"
@@ -323,20 +369,66 @@ export default function PortfolioGrid() {
     });
   }, [selectedCategory]);
 
-  // --- Infinite Scroll Observer ---
+  // --- Smooth Infinite Scroll with RAF ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && displayLimit < sortedItems.length) {
-          setDisplayLimit((prev) => prev + 6);
+          // Use RAF for smooth loading
+          clearTimeout(loadTimeoutRef.current);
+          loadTimeoutRef.current = setTimeout(() => {
+            requestAnimationFrame(() => {
+              setDisplayLimit((prev) => {
+                const increment = isMobile() ? 6 : 9;
+                return Math.min(prev + increment, sortedItems.length);
+              });
+            });
+          }, 150);
         }
       },
-      { threshold: 0.1, rootMargin: "400px" }
+      { threshold: 0, rootMargin: "300px" }
     );
 
     if (observerTarget.current) observer.observe(observerTarget.current);
-    return () => observer.disconnect();
+
+    return () => {
+      clearTimeout(loadTimeoutRef.current);
+      observer.disconnect();
+    };
   }, [displayLimit, sortedItems.length]);
+
+  // --- Memory cleanup on lightbox ---
+  useEffect(() => {
+    if (index >= 0) {
+      // Give browser time to open lightbox smoothly
+      const timer = setTimeout(() => {
+        if (masonryRef.current) {
+          masonryRef.current.style.display = "none";
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    } else if (masonryRef.current) {
+      masonryRef.current.style.display = "";
+    }
+  }, [index]);
+
+  // --- Scroll restoration ---
+  const scrollPosRef = useRef(0);
+  useEffect(() => {
+    if (index >= 0) {
+      scrollPosRef.current = window.scrollY;
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      // Smooth scroll restoration
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scrollPosRef.current, behavior: "instant" });
+      });
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [index]);
 
   const visibleItems = sortedItems.slice(0, displayLimit);
   const isLightboxOpen = index >= 0;
@@ -346,21 +438,16 @@ export default function PortfolioGrid() {
       <CategoryFilter
         onCategoryChange={(cat) => {
           setIndex(-1);
-          setDisplayLimit(12);
+          setDisplayLimit(isMobile() ? 12 : 18);
           setSelectedCategory(cat);
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       />
 
-      {/* MEMORY FIX: 
-        We use 'invisible h-0' instead of 'hidden' to keep the Masonry 
-        calculations in the background without the browser actually 
-        trying to paint the pixels. This stops mobile crashes.
-      */}
       <div
-        className={`w-full mb-20 px-1.5 transition-all duration-300 ${
-          isLightboxOpen
-            ? "invisible h-0 overflow-hidden"
-            : "visible opacity-100"
+        ref={masonryRef}
+        className={`w-full mb-20 px-1.5 transition-opacity duration-300 ${
+          isLightboxOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         <Masonry
@@ -379,17 +466,36 @@ export default function PortfolioGrid() {
             />
           ))}
         </Masonry>
-        {/* Intersection Sentinel */}
-        <div ref={observerTarget} className="h-10 w-full" />
+
+        {displayLimit < sortedItems.length && (
+          <div
+            ref={observerTarget}
+            className="h-20 w-full flex items-center justify-center"
+          >
+            <div className="w-8 h-8 border-2 border-muted border-t-foreground rounded-full animate-spin" />
+          </div>
+        )}
       </div>
 
-      <Lightbox
-        index={index}
-        open={isLightboxOpen}
-        close={() => setIndex(-1)}
-        slides={sortedItems.map((item) => ({ src: item.image }))}
-        plugins={[Zoom]}
-      />
+      {isLightboxOpen && (
+        <Lightbox
+          index={index}
+          open={true}
+          close={() => setIndex(-1)}
+          slides={sortedItems.map((item) => ({ src: item.image }))}
+          plugins={[Zoom]}
+          carousel={{
+            finite: sortedItems.length < 100,
+            preload: 2, // Only preload 2 images ahead
+          }}
+          render={{
+            buttonPrev: sortedItems.length <= 1 ? () => null : undefined,
+            buttonNext: sortedItems.length <= 1 ? () => null : undefined,
+          }}
+          controller={{ closeOnBackdropClick: true }}
+          animation={{ fade: 250 }}
+        />
+      )}
     </section>
   );
 }
