@@ -14,10 +14,10 @@ interface PortfolioItem {
   image: string;
   aspectRatio: string;
   category: Category;
-  color?: string; // Optional for the blur effect
+  color?: string;
 }
 
-// --- Dynamic Blur Helper ---
+// --- Dynamic Blur Helper (Matches your photo tones) ---
 const getDynamicBlur = (color: string = "#1a1a1a") => {
   const toBase64 = (str: string) =>
     typeof window === "undefined"
@@ -53,7 +53,7 @@ const PortfolioCard = memo(function PortfolioCard({
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority={index < 2}
-          decoding="async"
+          decoding="async" // Offloads decoding from main thread
           placeholder="blur"
           blurDataURL={blurUrl}
         />
@@ -63,7 +63,7 @@ const PortfolioCard = memo(function PortfolioCard({
   );
 });
 
-// --- DATA (YOUR ORIGINAL DATA & ORDER) ---
+// --- YOUR DATA & ORDER ---
 const portfolioItems: PortfolioItem[] = [
   {
     image: "/f.jpg",
@@ -292,13 +292,21 @@ const mobileOrder = [
   "/p.webp",
 ];
 
+// --- MASONRY BREAKPOINTS ---
+const breakpointColumns = {
+  default: 3,
+  1024: 3,
+  768: 2,
+  0: 1, // Restores single column on mobile
+};
+
 export default function PortfolioGrid() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("all");
   const [index, setIndex] = useState(-1);
-  const [displayLimit, setDisplayLimit] = useState(10); // Start with more items
+  const [displayLimit, setDisplayLimit] = useState(12); // Higher initial count for masonry flow
   const observerTarget = useRef(null);
 
-  // --- RESTORED: Sorting & Filtering ---
+  // --- Filter and Sort (Restored your exact logic) ---
   const sortedItems = useMemo(() => {
     const filtered =
       selectedCategory === "all"
@@ -315,7 +323,7 @@ export default function PortfolioGrid() {
     });
   }, [selectedCategory]);
 
-  // --- STABILITY: Infinite Scroll ---
+  // --- Infinite Scroll Observer ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -323,7 +331,7 @@ export default function PortfolioGrid() {
           setDisplayLimit((prev) => prev + 6);
         }
       },
-      { threshold: 0.1, rootMargin: "400px" } // Load earlier to prevent scroll gaps
+      { threshold: 0.1, rootMargin: "400px" }
     );
 
     if (observerTarget.current) observer.observe(observerTarget.current);
@@ -338,21 +346,25 @@ export default function PortfolioGrid() {
       <CategoryFilter
         onCategoryChange={(cat) => {
           setIndex(-1);
-          setDisplayLimit(10);
+          setDisplayLimit(12);
           setSelectedCategory(cat);
         }}
       />
 
-      {/* STABILITY: Memory Trap Fix */}
+      {/* MEMORY FIX: 
+        We use 'invisible h-0' instead of 'hidden' to keep the Masonry 
+        calculations in the background without the browser actually 
+        trying to paint the pixels. This stops mobile crashes.
+      */}
       <div
-        className={`w-full mb-20 px-1.5 transition-opacity duration-300 ${
+        className={`w-full mb-20 px-1.5 transition-all duration-300 ${
           isLightboxOpen
             ? "invisible h-0 overflow-hidden"
             : "visible opacity-100"
         }`}
       >
         <Masonry
-          breakpointCols={{ default: 3, 1024: 3, 768: 2, 500: 1 }}
+          breakpointCols={breakpointColumns}
           className="flex gap-1.5"
           columnClassName="flex flex-col gap-1.5"
         >
@@ -367,6 +379,7 @@ export default function PortfolioGrid() {
             />
           ))}
         </Masonry>
+        {/* Intersection Sentinel */}
         <div ref={observerTarget} className="h-10 w-full" />
       </div>
 
