@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useState, useMemo, useCallback } from "react"
-import Masonry from "react-masonry-css"
-import PortfolioCard from "@/components/portfolio-card"
-import CategoryFilter, { type Category } from "@/components/category-filter"
+import { useState, useMemo, useCallback } from "react";
+import Masonry from "react-masonry-css";
+import PortfolioCard from "@/components/portfolio-card";
+import CategoryFilter, { type Category } from "@/components/category-filter";
 
-import { Lightbox } from "yet-another-react-lightbox"
-import Zoom from "yet-another-react-lightbox/plugins/zoom"
-import "yet-another-react-lightbox/styles.css"
+import { Lightbox } from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
 
 interface PortfolioItem {
-  image: string
-  aspectRatio: string
-  category: Category
+  image: string;
+  aspectRatio: string;
+  category: Category;
 }
 
 const portfolioItems: PortfolioItem[] = [
@@ -176,7 +176,7 @@ const portfolioItems: PortfolioItem[] = [
     aspectRatio: "aspect-[3/4]",
     category: "people",
   },
-]
+];
 
 const mobileOrder = [
   "/f.jpg",
@@ -209,50 +209,61 @@ const mobileOrder = [
   "/l.webp",
   "/oo.webp",
   "/p.webp",
-]
+];
 
 const breakpointColumns = {
   default: 3,
   1024: 3,
   768: 2,
   0: 1,
-}
+};
 
 export default function PortfolioGrid() {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("all")
-  const [index, setIndex] = useState(-1)
+  const [selectedCategory, setSelectedCategory] = useState<Category>("all");
+  const [index, setIndex] = useState(-1);
 
   const sortedItems = useMemo(() => {
     const filtered =
-      selectedCategory === "all" ? portfolioItems : portfolioItems.filter((item) => item.category === selectedCategory)
+      selectedCategory === "all"
+        ? portfolioItems
+        : portfolioItems.filter((item) => item.category === selectedCategory);
 
     return [...filtered].sort((a, b) => {
-      const aIndex = mobileOrder.indexOf(a.image)
-      const bIndex = mobileOrder.indexOf(b.image)
+      const aIndex = mobileOrder.indexOf(a.image);
+      const bIndex = mobileOrder.indexOf(b.image);
 
-      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex
-      if (aIndex !== -1) return -1
-      if (bIndex !== -1) return 1
-      return 0
-    })
-  }, [selectedCategory])
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+      return 0;
+    });
+  }, [selectedCategory]);
 
-  const slides = useMemo(() => sortedItems.map((item) => ({ src: item.image })), [sortedItems])
+  const slides = useMemo(
+    () => sortedItems.map((item) => ({ src: item.image })),
+    [sortedItems]
+  );
+  const safeIndex = index >= slides.length ? -1 : index;
 
   const handleCardClick = useCallback((i: number) => {
-    setIndex(i)
-  }, [])
+    setIndex(i);
+  }, []);
 
   const handleCategoryChange = useCallback((category: Category) => {
-    setSelectedCategory(category)
-  }, [])
+    setIndex(-1); // close lightbox
+    setSelectedCategory(category);
+  }, []);
 
   return (
     <section className="w-full">
       <CategoryFilter onCategoryChange={handleCategoryChange} />
 
       <div className="w-full mb-20 md:mb-32 px-1.5">
-        <Masonry breakpointCols={breakpointColumns} className="flex gap-1.5" columnClassName="flex flex-col gap-1.5">
+        <Masonry
+          breakpointCols={breakpointColumns}
+          className="flex gap-1.5"
+          columnClassName="flex flex-col gap-1.5"
+        >
           {sortedItems.map((item, i) => (
             <PortfolioCard
               key={`${item.image}-${i}`}
@@ -266,8 +277,8 @@ export default function PortfolioGrid() {
       </div>
 
       <Lightbox
-        index={index}
-        open={index >= 0}
+        index={safeIndex}
+        open={safeIndex >= 0}
         close={() => setIndex(-1)}
         slides={slides}
         plugins={[Zoom]}
@@ -278,5 +289,5 @@ export default function PortfolioGrid() {
         }}
       />
     </section>
-  )
+  );
 }
