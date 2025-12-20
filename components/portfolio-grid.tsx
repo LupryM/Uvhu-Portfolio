@@ -146,12 +146,7 @@ const portfolioItems: PortfolioItem[] = [
     category: "people",
     color: "#444",
   },
-  {
-    image: "/ll.webp",
-    aspectRatio: "aspect-[3/4]",
-    category: "people",
-    color: "#333",
-  },
+ 
   {
     image: "/j.webp",
     aspectRatio: "aspect-[3/4]",
@@ -334,12 +329,7 @@ const portfolioItems: PortfolioItem[] = [
     category: "people",
     color: "#111",
   },
-  {
-    image: "/eee.webp",
-    aspectRatio: "aspect-[3/4]",
-    category: "people",
-    color: "#111",
-  },
+  
   {
     image: "/fff.webp",
     aspectRatio: "aspect-[3/4]",
@@ -419,7 +409,7 @@ const mobileOrder = [
   "/t.webp",
 
   "/ll.webp",
-  "/eee.webp",
+
   "/fff.webp",
   "/b.webp",
   "/gg.webp",
