@@ -135,6 +135,12 @@ const portfolioItems: PortfolioItem[] = [
     color: "#222",
   },
   {
+    image: "/aaa.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "people",
+    color: "#111",
+  },
+  {
     image: "/s.webp",
     aspectRatio: "aspect-[3/4]",
     category: "people",
@@ -152,6 +158,7 @@ const portfolioItems: PortfolioItem[] = [
     category: "sports",
     color: "#111",
   },
+
   {
     image: "/ee.webp",
     aspectRatio: "aspect-[3/4]",
@@ -291,9 +298,106 @@ const portfolioItems: PortfolioItem[] = [
     color: "#222",
   },
   {
-    image: "/pp.webp",
+    image: "/qq.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "events",
+    color: "#111",
+  },
+  {
+    image: "/tt.webp",
     aspectRatio: "aspect-[3/4]",
     category: "people",
+    color: "#111",
+  },
+  {
+    image: "/vv.webp",
+    aspectRatio: "aspect-[16/9]",
+    category: "events",
+    color: "#111",
+  },
+
+  {
+    image: "/bbb.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/ccc.webp",
+    aspectRatio: "aspect-[2/3]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/ddd.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/eee.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/fff.webp",
+    aspectRatio: "aspect-[3/4]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/ww.webp",
+    aspectRatio: "aspect-[16/9]",
+    category: "events",
+    color: "#111",
+  },
+  {
+    image: "/xx.webp",
+    aspectRatio: "aspect-[16/9]",
+    category: "events",
+    color: "#111",
+  },
+  {
+    image: "/yy.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "places",
+    color: "#111",
+  },
+  {
+    image: "/zz.webp",
+    aspectRatio: "aspect-square",
+    category: "events",
+    color: "#111",
+  },
+  {
+    image: "/ggg.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/lll.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "people",
+    color: "#111",
+  },
+  {
+    image: "/iii.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "places",
+    color: "#111",
+  },
+  {
+    image: "/jjj.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "places",
+    color: "#111",
+  },
+  {
+    image: "/kkk.webp",
+    aspectRatio: "aspect-[4/5]",
+    category: "places",
     color: "#111",
   },
 ];
@@ -306,29 +410,61 @@ const mobileOrder = [
   "/e.webp",
   "/a.webp",
   "/jj.webp",
+
   "/s.webp",
+
   "/g.webp",
   "/r.webp",
+
   "/t.webp",
+
   "/ll.webp",
+  "/eee.webp",
+  "/fff.webp",
   "/b.webp",
   "/gg.webp",
   "/ff.webp",
   "/bb.webp",
   "/y.webp",
   "/z.webp",
-  "/pp.webp",
+  "/vv.webp",
   "/cc.webp",
-  "/o.webp",
-  "/f.webp",
-  "/aa.webp",
+
   "/dd.webp",
-  "/j.webp",
-  "/ee.webp",
+
+  "/qq.webp",
+  "/zz.webp",
+  "/ww.webp",
+  "/xx.webp",
+
+  "/ggg.webp",
+  "/pp.webp",
+  "/bbb.webp",
+  "/ccc.webp",
+  "/aaa.webp",
+
   "/v.webp",
-  "/l.webp",
-  "/oo.webp",
+  "/o.webp",
+
+  "/f.webp",
+
+  "/yy.webp",
+  "/aa.webp",
+
   "/p.webp",
+  "/oo.webp",
+  "/tt.webp",
+
+  "/ddd.webp",
+  "/lll.webp",
+  "/iii.webp",
+  "/jjj.webp",
+  "/kkk.webp",
+  "/j.webp",
+
+  "/vv.webp",
+  "/ee.webp",
+  "/l.webp",
 ];
 
 // --- MASONRY BREAKPOINTS ---
