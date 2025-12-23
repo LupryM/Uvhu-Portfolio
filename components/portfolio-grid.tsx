@@ -146,7 +146,7 @@ const portfolioItems: PortfolioItem[] = [
     category: "people",
     color: "#444",
   },
- 
+
   {
     image: "/j.webp",
     aspectRatio: "aspect-[3/4]",
@@ -317,19 +317,14 @@ const portfolioItems: PortfolioItem[] = [
     category: "people",
     color: "#111",
   },
-  {
-    image: "/ccc.webp",
-    aspectRatio: "aspect-[2/3]",
-    category: "people",
-    color: "#111",
-  },
+
   {
     image: "/ddd.webp",
     aspectRatio: "aspect-[3/4]",
     category: "people",
     color: "#111",
   },
-  
+
   {
     image: "/fff.webp",
     aspectRatio: "aspect-[3/4]",
