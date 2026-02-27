@@ -17,7 +17,6 @@ const nextConfig = {
         hostname: "blob.v0.app",
       },
     ],
-    unoptimized: true,
   },
 };
 
