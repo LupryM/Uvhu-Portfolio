@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Twitter, Instagram, Mail } from "lucide-react";
 
 export default function FullHero() {
@@ -9,18 +10,28 @@ export default function FullHero() {
       {/* Background Images */}
       <div className="absolute inset-0 w-full h-full">
         {/* Desktop Image */}
-        <img
-          src="/f.webp"
-          alt="Full-screen hero image"
-          className="hidden sm:block w-full h-full object-cover object-center"
-        />
+        <div className="hidden sm:block absolute inset-0 w-full h-full">
+          <Image
+            src="/f.webp"
+            alt="Full-screen hero image"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
 
         {/* Mobile Image */}
-        <img
-          src="/fm.jpg" // <-- replace with your mobile version
-          alt="Full-screen hero image mobile"
-          className="block sm:hidden w-full h-full object-cover object-center"
-        />
+        <div className="block sm:hidden absolute inset-0 w-full h-full">
+          <Image
+            src="/fm.jpg" // <-- replace with your mobile version
+            alt="Full-screen hero image mobile"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/50 backdrop-brightness-75"></div>
